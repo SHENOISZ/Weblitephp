@@ -1,0 +1,15 @@
+RewriteEngine On
+
+RewriteBase /
+
+ErrorDocument 404 /app/views/error/404.html
+
+# =============== home ================== #
+RewriteRule ^$ run.php?path=home
+RewriteRule ^/$ run.php?path=home
+RewriteRule ^home$ run.php?path=home
+RewriteRule ^home/$ run.php?path=home
+
+# =============== about ================== #
+RewriteRule ^about$ run.php?path=about
+RewriteRule ^about/$ run.php?path=about

@@ -70,7 +70,16 @@ class Mysql extends localConfig {
 	public function query($sql) {
 
 		$result = $this->connect()->query($sql);
-		$this->count = $result->num_rows;
+		
+		try {
+
+			$this->count = undefined(isset($result->num_rows));
+
+		} catch(Exception $e) {
+
+			$this->count = 0;
+		}
+
 		$this->connect()->close();
 		
 		return $result;
@@ -82,7 +91,16 @@ class Mysql extends localConfig {
 		$fields_ = $this->sql($fields);
 		$sql = "SELECT ".$fields_[0]." FROM ".$this->table.$fields_[2]." LIMIT 1;";
 		$result = $this->connect()->query($sql);
-		$this->count = $result->num_rows;
+
+		try {
+
+			$this->count = undefined(isset($result->num_rows));
+
+		} catch(Exception $e) {
+
+			$this->count = 0;
+		}
+		
 		$this->connect()->close();
 
 		return new Models($result);
@@ -94,7 +112,16 @@ class Mysql extends localConfig {
 		$fields_ = $this->sql($fields);
 		$sql = "SELECT ".$fields_[0]." FROM ".$this->table.$fields_[2].";";
 		$result = $this->connect()->query($sql);
-		$this->count = $result->num_rows;
+		
+		try {
+
+			$this->count = undefined(isset($result->num_rows));
+
+		} catch(Exception $e) {
+
+			$this->count = 0;
+		}
+
 		$this->connect()->close();
 
 		return new Models($result);

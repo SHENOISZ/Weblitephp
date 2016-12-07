@@ -14,10 +14,22 @@ class Models {
 		return mysqli_fetch_array($this->obj);
 	}
 
+	public static function integerField(
+		$name='integer',
+		$maxlengh=11,
+		$value='NOT NULL',
+		$unique=''
+	) {
+
+		$value = strtoupper($value);
+		$unique = strtoupper($unique);
+
+		return "$name int($maxlengh) $value $unique";
+	}
 
 	public static function charField(
 		$name='name',
-		$maxlengh='100',
+		$maxlengh=100,
 		$value='NOT NULL',
 		$unique=''
 	) {
@@ -30,7 +42,20 @@ class Models {
 
 	public static function emailField(
 		$name='email',
-		$maxlengh='150',
+		$maxlengh=150,
+		$value='NOT NULL',
+		$unique=''
+	) {
+
+		$value = strtoupper($value);
+		$unique = strtoupper($unique);
+
+		return "$name varchar($maxlengh) $value $unique";
+	}
+
+	public static function passwordField(
+		$name='password',
+		$maxlengh=150,
 		$value='NOT NULL',
 		$unique=''
 	) {
@@ -51,6 +76,18 @@ class Models {
 		$unique = strtoupper($unique);
 
 		return "$name text $value $unique";
+	}
+
+	public static function booleanField(
+		$name='bool',
+		$value='NOT NULL',
+		$unique=''
+	) {
+
+		$value = strtoupper($value);
+		$unique = strtoupper($unique);
+
+		return "$name boolean $value $unique";
 	}
 }
 

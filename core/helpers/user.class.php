@@ -8,38 +8,95 @@ class User {
 
 	function __construct() {
 
+		session_start();
 		$this->obj = new UserModel();
 	}
 
 
-	public function exists($user) {
+	public function exists($user, $password) {
 
-		$this->obj->select("nickname='$user'");
+		$this->obj->select("nickname='$user', password='$password'");
 
 		if ($this->obj->count() > 0) {
 
 			return true;
 
-		} else {
-			return false;
-		}
+		} 
+
+		return false;
 	}
 
-	public function is_logged() {
+	public function is_logged($user) {
+
+		if (isset($_SESSION[$user])) {
+
+			if ($_SESSION['user'] == $user) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		return false;
 		
 	}
 
-	public function login() {
+	public function login($user, $password) {
 
+		if ($this->exists($user, $password)) {
+
+			$_SESSION['user'] = $user;
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public function logout() {
 
+		if (isset($_SESSION['user'])) {
+
+			unset($_SESSION['user']);
+
+			return true;
+		}
+
+		return false;
 	}
 
-	public function register($nickname, $name, $middlename, $email, $description='') {
+	public function sessionClear() {
 
-		$this->obj->insert("nickname='$nickname', name='$name',middlename='$middlename', email='$email', description='$description'");
+		session_destroy();
+	}
+
+	public function create_user(
+		$nickname, 
+		$name, 
+		$middlename='Doe', 
+		$password, 
+		$email, 
+		$type_user=1, 
+		$description=''
+	) {
+
+		if (!$this->exists($nickname, $password)) {
+
+			$this->obj->insert(
+				"nickname='$nickname', 
+				name='$name', 
+				middlename='$middlename', 
+				password='$password', 
+				email='$email', 
+				type_user='$type_user', 
+				description='$description'"
+			);
+
+			return true;
+		}
+
+		return false;
 	}
 }
 

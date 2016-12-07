@@ -6,7 +6,7 @@ class globalConfig {
 	# ============ appkey =========== #
 	public $secretkey = "secretkey:fklriyp673uazlçp80837264gjlkprjehdhauq2i96klobbpupmdor";
 	# ========== path static ========= #
-	public $static = "static:/app/assets";
+	public $static = "static:/apps/";
 	# ============ selected app ============ #
 	public $selected_app = "example";
 }

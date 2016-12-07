@@ -10,7 +10,7 @@ $config = new globalConfig();
 $url = $_REQUEST['path'];
 $request = "url:$url";
 $request .= ','.$config->secretkey;
-$request .= ','.$config->static;
+$request .= ','.$config->static.$config->selected_app."/assets";
 # ======================================= #
 
 require base_core('/exceptions/exceptions.php');

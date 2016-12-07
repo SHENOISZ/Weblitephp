@@ -23,7 +23,8 @@ class Controls extends CoreControls {
 	function index($request=[]) {
 
 		$obj = new User();
-		echo $obj->exists('shenoisz');
+		$obj->logout();
+		//$obj->login('shenoisz', 'kamikazi');
 
 		$request['title'] = "Home";
 
@@ -32,7 +33,10 @@ class Controls extends CoreControls {
 
 	function about($request=[]) {
 
-		return $this->html("<h1>about</h1>");
+		$obj = new User();
+		$obj->login('shenoisz', 'kamikazi');
+
+		return $this->html("<h1>about</h1>".$_SESSION['shenoisz']);
 	}
 
 }

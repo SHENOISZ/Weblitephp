@@ -18,6 +18,7 @@
 //$obj = new User();
 //$obj->create_user('shenoisz', 'mk', 'mk', '123', 'dev@dev.com', 1, '');
 //$obj->logout();
+//$obj->sessionClear()
 //$obj->login("email='dev@dev.com', password='kamikazi'");
 //$obj->login("nickname='shenoisz', password='123'");
 # ====================================================== #
@@ -26,6 +27,7 @@
 require base_core('/controls/controls.class.php');
 require base_app('/models/HomeModels.class.php');
 require base_core('/helpers/user.class.php');
+require base_core('/helpers/text.class.php');
 
 class Controls extends CoreControls {
 	
@@ -33,6 +35,9 @@ class Controls extends CoreControls {
 	function index($request=[]) {		
 
 		$request['title'] = "Home";
+
+		$obj = new Text();
+		echo $obj->slugfy('teste exemplo ão');
 
 		return $this->render("home/index.html", $request);
 	}

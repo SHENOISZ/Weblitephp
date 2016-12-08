@@ -4,10 +4,19 @@ header ('Content-type: text/html; charset=UTF-8');
 
 require "core/configs/configs.php";
 
+
 $config = new globalConfig();
 
 # ========= add request globals ========= #
-$url = $_REQUEST['path'];
+if(isset($_REQUEST['path'])) {
+	
+	$url = $_REQUEST['path'];
+
+} else {
+
+	$url = 'home';
+}
+
 $request = "url:$url";
 $request .= ','.$config->secretkey;
 $request .= ','.$config->static.$config->selected_app."/assets";

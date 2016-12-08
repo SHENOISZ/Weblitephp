@@ -15,6 +15,8 @@ class Routers {
 	public function request() {
 
 		$context = [];
+		$context['get'] = $_REQUEST;
+		$context['post'] = $_POST;
 
 		foreach (explode(',', $this->url) as $item) {
 

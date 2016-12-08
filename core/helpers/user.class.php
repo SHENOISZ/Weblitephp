@@ -13,9 +13,10 @@ class User {
 	}
 
 
-	public function exists($user, $password) {
+	public function exists($dados) {
 
-		$this->obj->select("nickname='$user', password='$password'");
+
+		$this->obj->select($dados);
 
 		if ($this->obj->count() > 0) {
 
@@ -42,11 +43,13 @@ class User {
 		
 	}
 
-	public function login($user, $password) {
+	public function login($dados) {
 
-		if ($this->exists($user, $password)) {
+		if ($this->exists($dados)) {
 
-			$_SESSION['user'] = $user;
+			$result = $this->obj->select_($dados);
+			$_SESSION['user'] = $result->fetchArray()['nickname'];
+			$_SESSION['user_attr'] = $result->fetchArray();
 
 			return true;
 		}
@@ -81,7 +84,7 @@ class User {
 		$description=''
 	) {
 
-		if (!$this->exists($nickname, $password)) {
+		if (!$this->exists("nickname='$nickname', email='$email'")) {
 
 			$this->obj->insert(
 				"nickname='$nickname', 

@@ -106,11 +106,53 @@ class Mysql extends localConfig {
 		return new Models($result);
 	}
 
+	# ============ return consult in mysql with limit 1 ===== #
+	public function select_($fields) {
+
+		$fields_ = $this->sql($fields);
+		$sql = "SELECT * FROM ".$this->table.$fields_[2]." LIMIT 1;";
+		$result = $this->connect()->query($sql);
+
+		try {
+
+			$this->count = undefined(isset($result->num_rows));
+
+		} catch(Exception $e) {
+
+			$this->count = 0;
+		}
+		
+		$this->connect()->close();
+
+		return new Models($result);
+	}
+
 	# ============ return consult in mysql ===== #
 	public function selectAll($fields) {
 
 		$fields_ = $this->sql($fields);
 		$sql = "SELECT ".$fields_[0]." FROM ".$this->table.$fields_[2].";";
+		$result = $this->connect()->query($sql);
+		
+		try {
+
+			$this->count = undefined(isset($result->num_rows));
+
+		} catch(Exception $e) {
+
+			$this->count = 0;
+		}
+
+		$this->connect()->close();
+
+		return new Models($result);
+	}
+
+	# ============ return consult in mysql ===== #
+	public function selectAll_($fields) {
+
+		$fields_ = $this->sql($fields);
+		$sql = "SELECT * FROM ".$this->table.$fields_[2].";";
 		$result = $this->connect()->query($sql);
 		
 		try {

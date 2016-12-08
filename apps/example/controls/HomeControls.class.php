@@ -1,7 +1,7 @@
 <?php
 
 /*
-# ================== Examples of consult: ============== #
+# ================== Examples of consult ============== #
 //$obj = new HomeModel();
 //$result = $obj->selectAll("name='shenoisz'");
 //$result = $obj->insert("name='shenoisz', email='mk@dev.com', comments=''");
@@ -13,6 +13,16 @@
 # ====================================================== #
 */
 
+/*
+# ================== Examples class User ============== #
+//$obj = new User();
+//$obj->create_user('shenoisz', 'mk', 'mk', '123', 'dev@dev.com', 1, '');
+//$obj->logout();
+//$obj->login("email='dev@dev.com', password='kamikazi'");
+//$obj->login("nickname='shenoisz', password='123'");
+# ====================================================== #
+*/
+
 require base_core('/controls/controls.class.php');
 require base_app('/models/HomeModels.class.php');
 require base_core('/helpers/user.class.php');
@@ -20,11 +30,7 @@ require base_core('/helpers/user.class.php');
 class Controls extends CoreControls {
 	
 
-	function index($request=[]) {
-
-		$obj = new User();
-		$obj->logout();
-		//$obj->login('shenoisz', 'kamikazi');
+	function index($request=[]) {		
 
 		$request['title'] = "Home";
 
@@ -33,10 +39,7 @@ class Controls extends CoreControls {
 
 	function about($request=[]) {
 
-		$obj = new User();
-		$obj->login('shenoisz', 'kamikazi');
-
-		return $this->html("<h1>about</h1>".$_SESSION['shenoisz']);
+		return $this->html("<h1>about</h1>");
 	}
 
 }

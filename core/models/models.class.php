@@ -4,14 +4,23 @@ class Models {
 
 	private $obj;
 
-	function __construct($obj='') {
+	function __construct($obj) {
 
 		return $this->obj = $obj;
 	}
 
 	public function fetchArray() {
 
-		return mysqli_fetch_array($this->obj);
+		$dados = [];
+		$count = 0;
+		
+		while ($dado = mysqli_fetch_array($this->obj)) {
+
+			$dados[$count] = $dado;
+			$count++;
+		}
+
+		return $dados;
 	}
 
 	public static function integerField(
@@ -76,6 +85,19 @@ class Models {
 		$unique = strtoupper($unique);
 
 		return "$name text $value $unique";
+	}
+
+	public static function slugField(
+		$name='slug',
+		$maxlengh=250,
+		$value='NOT NULL',
+		$unique=''
+	) {
+
+		$value = strtoupper($value);
+		$unique = strtoupper($unique);
+
+		return "$name varchar($maxlengh) $value $unique";
 	}
 
 	public static function booleanField(

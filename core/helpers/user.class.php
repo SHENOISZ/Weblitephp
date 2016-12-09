@@ -15,8 +15,7 @@ class User {
 
 	public function exists($dados) {
 
-
-		$this->obj->select($dados);
+		$result = $this->obj->select($dados);
 
 		if ($this->obj->count() > 0) {
 
@@ -74,27 +73,29 @@ class User {
 		session_destroy();
 	}
 
-	public function create_user(
-		$nickname, 
-		$name, 
-		$middlename='Doe', 
-		$password, 
-		$email, 
-		$type_user=1, 
-		$description=''
-	) {
+	public function create_user($sql) {
 
-		if (!$this->exists("nickname='$nickname', email='$email'")) {
+		$nickname = '';
+		$email = '';
 
-			$this->obj->insert(
-				"nickname='$nickname', 
-				name='$name', 
-				middlename='$middlename', 
-				password='$password', 
-				email='$email', 
-				type_user='$type_user', 
-				description='$description'"
-			);
+		foreach (explode(',', $sql) as $item) {
+
+			$tmp = explode('=', $item);
+
+			if (trim($tmp[0]) == 'nickname') {
+
+				$nickname = $tmp[1];
+
+			} else if (trim($tmp[0]) == 'email') {
+
+				$email = $tmp[1];
+
+			}
+		}
+
+		if (!$this->exists("nickname=$nickname, email=$email")) {
+			
+			$this->obj->insert($sql);
 
 			return true;
 		}

@@ -5,14 +5,19 @@ require base_app("/config/config.class.php");
 
 class Mysql extends localConfig {
 
-	private $count;
 	public $table;
+	private $count;
+	private $filter;
+	private $configs;
+
 
 	# ======= create table if not exists ==========#
 	function __construct() {
 
 		$this->count = 0;
 		$this->table = get_class($this);
+		$this->filter = new Text();
+		$this->configs = new globalConfig();
 
 		$create = "CREATE TABLE IF NOT EXISTS ".$this->table." ( id int(11) NOT NULL UNIQUE AUTO_INCREMENT";
 
@@ -54,14 +59,37 @@ class Mysql extends localConfig {
 		$values = '';
 
 		foreach (explode(',', $fields) as $item) {
-			$field .= $item." AND ";
-			$field_ .=  trim(explode('=', $item)[0]).", ";
-			$values .= trim(explode('=', $item)[1]).", ";
+
+			$tmp = explode('=', $item);
+
+			$campos = trim($tmp[0]);
+
+			if ($campos == 'slug') {
+
+				$filted = $this->filter->slugfy($tmp[1]);
+
+			} else if ($campos == 'password') {
+
+				$filted = $this->filter->passwordfy($this->configs->get_secretkey(), $tmp[1]);
+
+			} else {
+
+				$filted = $this->filter->sql_verify($tmp[1]);
+			}	 
+
+
+			$field .= $campos."="."'$filted'"." AND ";
+			$values .= "'$filted'".", ";
+
+			$field_ .=  $campos.", ";
+			
 		}
 
 		$field_ = substr($field_, 0, strlen($field_) - 2);
 		$values = substr($values, 0, strlen($values) - 2);
 		$field = substr($field, 0, strlen($field) - 5);
+
+		//print_r([$field_, $values, $field]);
 
 		return [$field_, $values, $field];
 	}
@@ -94,7 +122,7 @@ class Mysql extends localConfig {
 
 		try {
 
-			$this->count = undefined(isset($result->num_rows));
+			$this->count = undefined($result->num_rows);
 
 		} catch(Exception $e) {
 
@@ -115,7 +143,7 @@ class Mysql extends localConfig {
 
 		try {
 
-			$this->count = undefined(isset($result->num_rows));
+			$this->count = undefined($result->num_rows);
 
 		} catch(Exception $e) {
 
@@ -127,7 +155,7 @@ class Mysql extends localConfig {
 		return new Models($result);
 	}
 
-	# ============ return consult in mysql ===== #
+	# ============ return consult in mysql ========= #
 	public function selectAll($fields) {
 
 		$fields_ = $this->sql($fields);
@@ -136,7 +164,7 @@ class Mysql extends localConfig {
 		
 		try {
 
-			$this->count = undefined(isset($result->num_rows));
+			$this->count = undefined($result->num_rows);
 
 		} catch(Exception $e) {
 
@@ -157,7 +185,7 @@ class Mysql extends localConfig {
 		
 		try {
 
-			$this->count = undefined(isset($result->num_rows));
+			$this->count = undefined($result->num_rows);
 
 		} catch(Exception $e) {
 

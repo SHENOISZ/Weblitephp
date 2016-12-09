@@ -12,16 +12,16 @@ function error_indice($array=[], $indice) {
 	}
 }
 
-// use isset
+
 function undefined($args) {
 
-	if (!$args) {
+	if (isset($args)) {
 
-			throw new Exception('<h4 id="exception">Variable undefined!</h4>');
+		return $args;	
 
 	} else {
 
-		return $args;
+		throw new Exception('<h4 id="exception">Variable undefined!</h4>');
 	}
 }
 

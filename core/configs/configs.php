@@ -8,6 +8,11 @@ class globalConfig {
 	public $static = "static:/apps/";
 	# ============ selected app ============ #
 	public $selected_app = "example";
+
+	# ============ return appkey =========== #
+	public function get_secretkey() {
+		return explode(':', $this->secretkey)[1];
+	}
 }
 
 # ============ return absolute path =========== #

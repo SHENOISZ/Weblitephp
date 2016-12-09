@@ -2,7 +2,9 @@
 
 class Text {
 
-	public static function sql_verify() {
+	public function sql_verify($sql) {
+
+		return addslashes($sql);
 
 	}
 
@@ -20,7 +22,7 @@ class Text {
 		return strtolower(preg_replace(array('/[^a-zA-Z0-9 -]/', '/[ -]+/', '/^-|-$/'), array('', '-', ''), remove_accent($text))); 
 	}
 
-	public static function passwordfy($secretkey, $password='') {
+	public function passwordfy($secretkey, $password='') {
 		
 		return $secretkey.sha1($password);
 	}

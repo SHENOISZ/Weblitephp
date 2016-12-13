@@ -18,9 +18,10 @@
 */
 
 /*
-# ================== Examples class User ============== #
+# ================== Examples class User and Auth ============== #
 //$obj = new User();
 //$obj->create_user("nickname=mk, name=mk, middlename=mk, password=123, email=mk@dev.com, type_user=1, description=");
+//$obj = new Auth();
 //$obj->logout();
 //$obj->sessionClear();
 //$obj->login("email=dev@dev.com, password=kamikazi");

@@ -9,6 +9,11 @@ class Models {
 		return $this->obj = $obj;
 	}
 
+	public function fetch_array() {
+
+		return mysqli_fetch_array($this->obj);
+	}
+
 	public function fetchArray() {
 
 		$dados = [];

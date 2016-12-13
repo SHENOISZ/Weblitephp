@@ -1,6 +1,5 @@
 <?php
 
-require base_core("/models/mysql.class.php");
 
 class CoreControls {
 

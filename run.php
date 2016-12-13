@@ -22,6 +22,7 @@ $request .= ','.$config->secretkey;
 $request .= ','.$config->static.$config->selected_app."/assets";
 # ======================================= #
 
+require base_core('/helpers/auth.class.php');
 require base_core('/exceptions/exceptions.php');
 require base_core('/helpers/text.class.php');
 require base_app("/routers/routers.php");
